@@ -1,5 +1,6 @@
-package model;
+package one_to_one_bidirectional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,20 +28,18 @@ public class Instructor {
 	@Column(name = "email")
 	private String email;
 
-	@OneToOne
-	@JoinColumn(name="instructor_detail_id")
-	private String instructorDetailId;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "instructor_detail_id")
+	private InstructorDetail instructorDetailId;
 
 	public Instructor() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Instructor(String firstName, String lastName, String email, String instructorDetailId) {
-		super();
+	public Instructor(String firstName, String lastName, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.instructorDetailId = instructorDetailId;
 	}
 
 	public int getId() {
@@ -75,11 +74,11 @@ public class Instructor {
 		this.email = email;
 	}
 
-	public String getInstructorDetailId() {
+	public InstructorDetail getInstructorDetailId() {
 		return instructorDetailId;
 	}
 
-	public void setInstructorDetailId(String instructorDetailId) {
+	public void setInstructorDetailId(InstructorDetail instructorDetailId) {
 		this.instructorDetailId = instructorDetailId;
 	}
 

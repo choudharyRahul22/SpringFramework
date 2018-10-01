@@ -25,6 +25,7 @@ Primary Key Foreign Key & Cascade:
 Primary key : unique identity of a table
 Foreign Key : make link between 2 table
 Cascade : Apply same to operation to related entities, for ex One To One Mapping (if we save instructor it will save instructor detail also)
+cascade type: PERSIST, REMOVE, REFRESH, DETACH, MERGE, ALL, by default no cascade type is defined
 
 Fetch type: Eager Vs Lazy:
 --------------------------
@@ -58,4 +59,7 @@ from the database, next flush/commit will delete from db.
 6.Detach: if entity is detached, it is not associated with a hibernate session.
 
 7.Merge: if instance is detached from session, then merge will reattach with session.
+
+
+Handle connection leak in finally block : session.close();
 
