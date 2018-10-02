@@ -1,4 +1,4 @@
-package eagerVslazy;
+package one_to_many_uni;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
