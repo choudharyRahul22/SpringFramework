@@ -1,4 +1,4 @@
-package one_to_many_bidirectional;
+package eagerVslazy;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +19,7 @@ public class OneToManyBidirectionalAdd {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			System.out.println("Starting One To Many Birectional Example");
+System.out.println("Starting One To Many Birectional Example");
 			
 			// start a transaction
 			session.beginTransaction();
@@ -54,6 +54,12 @@ public class OneToManyBidirectionalAdd {
 			session.save(course1);
 			session.save(course2);
 			
+			// get instructor again
+			Instructor getInstructor = session.get(Instructor.class, 1);
+			
+			// get courses
+			System.out.println("Instructor Lazy Loaded : " + getInstructor);
+			System.out.println("All Courses : "+getInstructor.getCourses());
 			
 			// commit transaction
 			session.getTransaction().commit();

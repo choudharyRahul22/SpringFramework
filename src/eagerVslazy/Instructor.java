@@ -1,4 +1,4 @@
-package one_to_many_bidirectional;
+package eagerVslazy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,8 +33,8 @@ public class Instructor {
 	@Column(name = "email")
 	private String email;
 
-	@OneToMany(mappedBy = "instructor", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "instructor", cascade = { CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.PERSIST, CascadeType.REFRESH })
 	private List<Course> courses;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -97,26 +98,27 @@ public class Instructor {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-	
+
 	// add convenience method for bi-directional relationship
 	public void addCourse(Course course) {
 		// create list of courses if list is not instantiated
 		if (courses == null) {
 			courses = new ArrayList<Course>();
 		}
-		
+
 		// add course to courses/ course list
 		courses.add(course);
-		
+
 		// add bidirectional mapping
-		// we added new course in Instructor now we need to add this instructor to Course
+		// we added new course in Instructor now we need to add this instructor to
+		// Course
 		course.setInstructor(this);
 	}
 
 	@Override
 	public String toString() {
 		return "Instructor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", courses=" + courses + ", instructorDetailId=" + instructorDetailId + "]";
+				+ ", instructorDetailId=" + instructorDetailId + "]";
 	}
 
 }

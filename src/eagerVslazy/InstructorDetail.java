@@ -1,4 +1,4 @@
-package one_to_many_bidirectional;
+package eagerVslazy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
