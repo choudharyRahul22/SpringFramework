@@ -1,4 +1,7 @@
-package one_to_one_bidirectional;
+package one_to_many_bidirectional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,6 +31,10 @@ public class Instructor {
 
 	@Column(name = "email")
 	private String email;
+
+	@OneToMany(mappedBy = "instructor", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	private List<Course> courses;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "instructor_detail_id")
@@ -82,10 +90,33 @@ public class Instructor {
 		this.instructorDetailId = instructorDetailId;
 	}
 
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+	
+	// add convenience method for bi-directional relationship
+	public void addCourse(Course course) {
+		// create list of courses if list is not instantiated
+		if (courses == null) {
+			courses = new ArrayList<Course>();
+		}
+		
+		// add course to courses/ course list
+		courses.add(course);
+		
+		// add bidirectional mapping
+		// we added new course in Instructor now we need to add this instructor to Course
+		course.setInstructor(this);
+	}
+
 	@Override
 	public String toString() {
 		return "Instructor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", instructorDetailId=" + instructorDetailId + "]";
+				+ ", courses=" + courses + ", instructorDetailId=" + instructorDetailId + "]";
 	}
 
 }

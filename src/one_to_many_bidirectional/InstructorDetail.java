@@ -1,4 +1,4 @@
-package one_to_one_unidirectional;
+package one_to_many_bidirectional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +23,9 @@ public class InstructorDetail {
 
 	@Column(name = "hobby")
 	private String hobby;
+
+	@OneToOne(mappedBy = "instructorDetailId", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	private Instructor instructor;
 
 	public InstructorDetail() {
 		// TODO Auto-generated constructor stub
@@ -55,6 +58,14 @@ public class InstructorDetail {
 
 	public void setHobby(String hobby) {
 		this.hobby = hobby;
+	}
+
+	public Instructor getInstructor() {
+		return instructor;
+	}
+
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
 	}
 
 	@Override
